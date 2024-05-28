@@ -1,4 +1,4 @@
-FROM nginx:stable
+FROM nginx:1.26.0-alpine-slim
 
 LABEL Name=echo-ip Version=0.0.5
 COPY nginx.conf /etc/nginx/nginx.conf
