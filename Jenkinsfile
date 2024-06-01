@@ -3,15 +3,17 @@ pipeline {
   stages {
     stage('git scm update') {
       steps {
-        git url: 'https://github.com/iac-sources/echo-ip.git', branch: 'main'
+        git url: 'https://github.com/gnu-gnu/echo-ip.git', branch: 'main'
       }
-    }
+    }   
     stage('docker build and push') {
       steps {
-        sh '''
-        docker build -t 192.168.1.10:8443/library/echo-ip .
-        docker push 192.168.1.10:8443/library/echo-ip
-        '''
+        script {
+          def image = docker.build("library/echo-ip")
+          docker.withRegistry("https://192.168.1.10:8443", "harbor-credential"){
+              image.push("latest")
+          }
+        }
       }
     }
     stage('deploy kubernetes') {
