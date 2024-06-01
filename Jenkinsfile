@@ -3,13 +3,13 @@ pipeline {
   stages {
     stage('git scm update') {
       steps {
-        git url: 'https://github.com/gnu-gnu/echo-ip.git', branch: 'main'
+        git url: 'https://github.com/IaC-Sources/echo-ip.git', branch: 'main'
       }
     }   
     stage('docker build and push') {
       steps {
         script {
-          def image = docker.build("library/echo-ip")
+          def image = docker.build("192.168.1.10:8443/library/echo-ip")
           docker.withRegistry("https://192.168.1.10:8443", "harbor-credential"){
               image.push("latest")
           }
