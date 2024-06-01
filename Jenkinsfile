@@ -9,7 +9,7 @@ pipeline {
     stage('docker build and push') {
       steps {
         script {
-          def image = docker.build("192.168.1.10:8443/library/echo-ip")
+          def image = docker.build("library/echo-ip")
           docker.withRegistry("https://192.168.1.10:8443", "harbor-credential"){
               image.push("latest")
           }
